@@ -44,9 +44,9 @@ namespace MusicPlayer.Services
                 // take into account that the splash screen is shown while this code runs.
                 await InitializeAsync();
                 UserDataService.Initialize();
-                IdentityService.InitializeWithAadAndPersonalMsAccounts();
-                var silentLoginSuccess = await IdentityService.AcquireTokenSilentAsync();
-                if (!silentLoginSuccess || !IdentityService.IsAuthorized())
+                //IdentityService.InitializeWithAadAndPersonalMsAccounts();
+                //var silentLoginSuccess = await IdentityService.AcquireTokenSilentAsync();
+                if (!IdentityService.IsLoggedIn())
                 {
                     await RedirectLoginPageAsync();
                 }

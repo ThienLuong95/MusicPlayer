@@ -33,67 +33,70 @@ namespace MusicPlayer.Core.Services
 
         public event EventHandler LoggedOut;
 
-        public void InitializeWithAadAndPersonalMsAccounts()
-        {
-            _integratedAuthAvailable = false;
-            _client = PublicClientApplicationBuilder.Create(_clientId)
-                                                    .WithAuthority(AadAuthorityAudience.AzureAdAndPersonalMicrosoftAccount)
-                                                    .Build();
-        }
+        //public void InitializeWithAadAndPersonalMsAccounts()
+        //{
+        //    _integratedAuthAvailable = false;
+        //    _client = PublicClientApplicationBuilder.Create(_clientId)
+        //                                            .WithAuthority(AadAuthorityAudience.AzureAdAndPersonalMicrosoftAccount)
+        //                                            .Build();
+        //}
 
-        public void InitializeWithAadMultipleOrgs(bool integratedAuth = false)
-        {
-            _integratedAuthAvailable = integratedAuth;
-            _client = PublicClientApplicationBuilder.Create(_clientId)
-                                                    .WithAuthority(AadAuthorityAudience.AzureAdMultipleOrgs)
-                                                    .Build();
-        }
+        //public void InitializeWithAadMultipleOrgs(bool integratedAuth = false)
+        //{
+        //    _integratedAuthAvailable = integratedAuth;
+        //    _client = PublicClientApplicationBuilder.Create(_clientId)
+        //                                            .WithAuthority(AadAuthorityAudience.AzureAdMultipleOrgs)
+        //                                            .Build();
+        //}
 
-        public void InitializeWithAadSingleOrg(string tenant, bool integratedAuth = false)
-        {
-            _integratedAuthAvailable = integratedAuth;
-            _client = PublicClientApplicationBuilder.Create(_clientId)
-                                                    .WithAuthority(AzureCloudInstance.AzurePublic, tenant)
-                                                    .Build();
-        }
+        //public void InitializeWithAadSingleOrg(string tenant, bool integratedAuth = false)
+        //{
+        //    _integratedAuthAvailable = integratedAuth;
+        //    _client = PublicClientApplicationBuilder.Create(_clientId)
+        //                                            .WithAuthority(AzureCloudInstance.AzurePublic, tenant)
+        //                                            .Build();
+        //}
 
         public bool IsLoggedIn() => _authenticationResult != null;
 
         public async Task<LoginResultType> LoginAsync()
         {
-            if (!NetworkInterface.GetIsNetworkAvailable())
-            {
-                return LoginResultType.NoNetworkAvailable;
-            }
+            //if (!NetworkInterface.GetIsNetworkAvailable())
+            //{
+            //    return LoginResultType.NoNetworkAvailable;
+            //}
 
-            try
-            {
-                var accounts = await _client.GetAccountsAsync();
-                _authenticationResult = await _client.AcquireTokenInteractive(_scopes)
-                                                     .WithAccount(accounts.FirstOrDefault())
-                                                     .ExecuteAsync();
-                if (!IsAuthorized())
-                {
-                    _authenticationResult = null;
-                    return LoginResultType.Unauthorized;
-                }
+            //try
+            //{
+            //    var accounts = await _client.GetAccountsAsync();
+            //    _authenticationResult = await _client.AcquireTokenInteractive(_scopes)
+            //                                         .WithAccount(accounts.FirstOrDefault())
+            //                                         .ExecuteAsync();
+            //    if (!IsAuthorized())
+            //    {
+            //        _authenticationResult = null;
+            //        return LoginResultType.Unauthorized;
+            //    }
 
-                LoggedIn?.Invoke(this, EventArgs.Empty);
-                return LoginResultType.Success;
-            }
-            catch (MsalClientException ex)
-            {
-                if (ex.ErrorCode == "authentication_canceled")
-                {
-                    return LoginResultType.CancelledByUser;
-                }
+            //    LoggedIn?.Invoke(this, EventArgs.Empty);
+            //    return LoginResultType.Success;
+            //}
+            //catch (MsalClientException ex)
+            //{
+            //    if (ex.ErrorCode == "authentication_canceled")
+            //    {
+            //        return LoginResultType.CancelledByUser;
+            //    }
 
-                return LoginResultType.UnknownError;
-            }
-            catch (Exception)
-            {
-                return LoginResultType.UnknownError;
-            }
+            //    return LoginResultType.UnknownError;
+            //}
+            //catch (Exception)
+            //{
+            //    return LoginResultType.UnknownError;
+            //}
+            await Task.Delay(500);
+            LoggedIn?.Invoke(this, EventArgs.Empty);
+            return LoginResultType.Success;
         }
 
         public bool IsAuthorized()
