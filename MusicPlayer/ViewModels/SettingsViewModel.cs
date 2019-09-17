@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -11,6 +12,7 @@ using MusicPlayer.Helpers;
 using MusicPlayer.Services;
 
 using Windows.ApplicationModel;
+using Windows.Globalization;
 using Windows.UI.Xaml;
 
 namespace MusicPlayer.ViewModels
@@ -24,6 +26,23 @@ namespace MusicPlayer.ViewModels
 
         private ElementTheme _elementTheme = ThemeSelectorService.Theme;
 
+        public List<Language> Langs => LanguageSeletorService.languages;
+        private Language _lang;
+        public Language Lang
+        {
+            get { return _lang; }
+            set
+            {
+                Set(ref _lang, value);
+                LanguageSeletorService.language = value;
+                LanguageSeletorService.flowDirection = LanguageSeletorService.GetFlowDirection();
+            }
+        }
+
+        public async void ChangeLang()
+        {
+            await LanguageSeletorService.SetRequestedLangAsync();
+        }
         public ElementTheme ElementTheme
         {
             get { return _elementTheme; }
@@ -74,6 +93,7 @@ namespace MusicPlayer.ViewModels
 
         public SettingsViewModel()
         {
+            LanguageSeletorService.InitializeAsync();
         }
 
         public async Task InitializeAsync()

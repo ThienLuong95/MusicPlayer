@@ -72,6 +72,11 @@
                         Margin="{StaticResource XSmallTopMargin}"
                         Style="{ThemeResource BodyTextBlockStyle}" />
                 </StackPanel>
+                <ComboBox ItemsSource="{x:Bind ViewModel.Langs, Mode=OneWay}"
+                         SelectedItem="{x:Bind ViewModel.Lang, Mode=TwoWay}"
+                         DisplayMemberPath="DisplayName"
+                         />
+                <Button Click="{x:Bind ViewModel.ChangeLang}" Content="Change Lang"/>
             </StackPanel>
             <HyperlinkButton
                 x:Uid="Settings_LogOut"

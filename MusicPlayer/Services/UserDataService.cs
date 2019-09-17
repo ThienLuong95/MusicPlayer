@@ -50,14 +50,14 @@ namespace MusicPlayer.Services
 
         private async void OnLoggedIn(object sender, EventArgs e)
         {
-            _user = await GetUserFromGraphApiAsync();
-            UserDataUpdated?.Invoke(this, _user);
+            //_user = await GetUserFromGraphApiAsync();
+            //UserDataUpdated?.Invoke(this, _user);
         }
 
         private async void OnLoggedOut(object sender, EventArgs e)
         {
-            _user = null;
-            await ApplicationData.Current.LocalFolder.SaveAsync<User>(_userSettingsKey, null);
+            //_user = null;
+            //await ApplicationData.Current.LocalFolder.SaveAsync<User>(_userSettingsKey, null);
         }
 
         private async Task<UserViewModel> GetUserFromCacheAsync()
